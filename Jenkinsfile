@@ -2,28 +2,46 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'us-east-2'
-        S3_BUCKET = 'andrew-cloud-project'
+        AWS_ACCESS_KEY_ID = credentials('AKIAXNLQP53GUCLIGNMR')
+        AWS_SECRET_ACCESS_KEY = credentials('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')
         CLOUDFRONT_DISTRIBUTION_ID = 'E2DEWR6BTZHCUT'
     }
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/andrewyang23/cloud-final-project.git'
+                git branch: 'main', url: 'https://github.com/yourusername/cloud-final-project.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building static website...'
+                // No build tools needed for static sites, just confirmation
             }
         }
 
         stage('Deploy to S3') {
             steps {
-                sh 'aws s3 sync . s3://${S3_BUCKET} --delete'
+                echo 'Deploying to S3 bucket...'
+                sh 'aws s3 sync . s3://andrew-cloud-project --delete'
             }
         }
 
-        stage('Invalidate CloudFront') {
+        stage('Invalidate CloudFront Cache') {
             steps {
-                sh 'aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths "/*"'
+                echo 'Invalidating CloudFront cache...'
+                sh 'aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful! Your website is live and secure.'
+        }
+        failure {
+            echo 'Deployment failed. Check AWS credentials or bucket permissions.'
         }
     }
 }
