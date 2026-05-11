@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID = credentials('AKIAXNLQP53GUCLIGNMR')
-        AWS_SECRET_ACCESS_KEY = credentials('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')
+        AWS_ACCESS_KEY_ID = credentials('AKIAXNLQP53GWBX2U76P')
+        AWS_SECRET_ACCESS_KEY = credentials('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')
         CLOUDFRONT_DISTRIBUTION_ID = 'E2DEWR6BTZHCUT'
     }
 
