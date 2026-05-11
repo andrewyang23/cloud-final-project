@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID = credentials('AKIAXNLQP53GWBX2U76P')
-        AWS_SECRET_ACCESS_KEY = credentials('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')
+        AWS_ACCESS_KEY_ID = credentials('aws-jenkins-creds')
+        AWS_SECRET_ACCESS_KEY = credentials('aws-jenkins-creds')
         CLOUDFRONT_DISTRIBUTION_ID = 'E2DEWR6BTZHCUT'
     }
 
